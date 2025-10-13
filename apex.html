@@ -1,0 +1,1394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thabiso Monyane Foundation - From Pitch to Purpose</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #1a3a6c;
+            --secondary: #d4af37;
+            --accent: #e63946;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --transition: all 0.3s ease;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            line-height: 1.6;
+            color: var(--dark);
+            background-color: var(--light);
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, h4, h5 {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 1rem;
+        }
+
+        p {
+            margin-bottom: 1rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section {
+            padding: 80px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .section-title h2 {
+            font-size: 2.5rem;
+            color: var(--primary);
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background-color: var(--secondary);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 14px 32px;
+            border-radius: 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: var(--transition);
+            cursor: pointer;
+            border: none;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: #0f2a4d;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        .btn-secondary:hover {
+            background-color: #c19b25;
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 1000;
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+        }
+
+        header.scrolled {
+            padding: 10px 0;
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-img {
+            height: 60px;
+            margin-right: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-text {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .logo-main {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--primary);
+            font-family: 'Montserrat', sans-serif;
+            line-height: 1.1;
+        }
+
+        .logo-tagline {
+            font-size: 0.8rem;
+            color: var(--secondary);
+            font-weight: 600;
+            letter-spacing: 1px;
+            margin-top: 2px;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+        }
+
+        .nav-item {
+            margin-left: 30px;
+        }
+
+        .nav-link {
+            font-weight: 600;
+            position: relative;
+            padding: 5px 0;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+        }
+
+        .nav-link:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--secondary);
+            transition: var(--transition);
+        }
+
+        .nav-link:hover:after {
+            width: 100%;
+        }
+
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+
+        .hamburger div {
+            width: 25px;
+            height: 3px;
+            background-color: var(--primary);
+            margin: 5px;
+            transition: var(--transition);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+            background: linear-gradient(135deg, var(--primary) 0%, #0f2a4d 100%);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            padding: 0 20px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 30px;
+            font-weight: 400;
+        }
+
+        .hero-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        /* Thabiso's Story Section */
+        .story {
+            background-color: white;
+        }
+
+        .story-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .story-text {
+            padding-right: 20px;
+        }
+
+        .story-text p {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 4px solid var(--secondary);
+            padding-left: 20px;
+            margin: 30px 0;
+            color: var(--primary);
+            font-size: 1.2rem;
+        }
+
+        .story-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .story-visual {
+            width: 100%;
+            max-width: 400px;
+            height: 500px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .story-icon {
+            font-size: 4rem;
+            margin-bottom: 20px;
+        }
+
+        .story-visual h3 {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+        }
+
+        /* About Section */
+        .about {
+            background-color: #f8f9fa;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            align-items: center;
+        }
+
+        .about-text h3 {
+            color: var(--primary);
+            margin: 20px 0 10px;
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .value-card {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+            background-color: white;
+        }
+
+        .value-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .value-icon {
+            font-size: 2.5rem;
+            color: var(--secondary);
+            margin-bottom: 15px;
+        }
+
+        /* Team Section */
+        .team {
+            background-color: white;
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .team-member {
+            text-align: center;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .team-member:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .member-img {
+            height: 250px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            color: white;
+        }
+
+        .member-info {
+            padding: 20px;
+        }
+
+        .member-name {
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .member-role {
+            color: var(--gray);
+            font-size: 0.9rem;
+        }
+
+        /* Programs Section */
+        .programs-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .program-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .program-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .program-img {
+            height: 200px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .program-content {
+            padding: 25px;
+        }
+
+        .program-title {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* News Section */
+        .news {
+            background-color: #f8f9fa;
+        }
+
+        .news-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .news-card {
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: var(--transition);
+        }
+
+        .news-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        .news-img {
+            height: 200px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            color: white;
+        }
+
+        .news-content {
+            padding: 25px;
+        }
+
+        .news-date {
+            color: var(--gray);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .news-title {
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* Partners Section */
+        .partners-grid {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 40px;
+        }
+
+        .partner-logo {
+            width: 150px;
+            height: 80px;
+            background-color: #f1f1f1;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            transition: var(--transition);
+        }
+
+        .partner-logo:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Get Involved Section */
+        .get-involved {
+            background: linear-gradient(135deg, var(--primary) 0%, #0f2a4d 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .get-involved .section-title h2 {
+            color: white;
+        }
+
+        .get-involved .section-title h2:after {
+            background-color: white;
+        }
+
+        .involve-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .involve-card {
+            background-color: rgba(255, 255, 255, 0.1);
+            padding: 40px 30px;
+            border-radius: 10px;
+            transition: var(--transition);
+            backdrop-filter: blur(10px);
+        }
+
+        .involve-card:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            transform: translateY(-10px);
+        }
+
+        .involve-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+
+        /* Gallery Section */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .gallery-item {
+            height: 250px;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            border-radius: 5px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: white;
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        /* Contact Section */
+        .contact-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-icon {
+            font-size: 1.5rem;
+            color: var(--secondary);
+            margin-right: 15px;
+        }
+
+        .contact-form {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-family: inherit;
+            transition: var(--transition);
+        }
+
+        .form-control:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        textarea.form-control {
+            min-height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 60px 0 20px;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 40px;
+            margin-bottom: 40px;
+        }
+
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .footer-logo-img {
+            height: 50px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-logo-text {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .footer-tagline {
+            color: var(--secondary);
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .footer-about p {
+            color: #adb5bd;
+            margin-top: 10px;
+        }
+
+        .footer-links h3, .footer-contact h3 {
+            color: white;
+            margin-bottom: 20px;
+            font-size: 1.2rem;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+
+        .footer-links a {
+            color: #adb5bd;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--secondary);
+        }
+
+        .footer-contact p {
+            color: #adb5bd;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+        }
+
+        .footer-contact i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            background-color: rgba(255, 255, 255, 0.1);
+            border-radius: 50%;
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background-color: var(--secondary);
+            color: var(--dark);
+        }
+
+        .copyright {
+            text-align: center;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: #adb5bd;
+            font-size: 0.9rem;
+        }
+
+        /* Logo Styling */
+        .logo-graphic {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: 50%;
+            color: white;
+            font-weight: bold;
+            font-size: 1.2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-graphic:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(45deg, transparent 0%, rgba(255,255,255,0.2) 100%);
+        }
+
+        .logo-graphic span {
+            z-index: 1;
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .about-content, .contact-content, .story-content {
+                grid-template-columns: 1fr;
+            }
+            
+            .hero h1 {
+                font-size: 2.8rem;
+            }
+            
+            .story-text {
+                padding-right: 0;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                top: 80px;
+                right: -100%;
+                width: 80%;
+                height: calc(100vh - 80px);
+                background-color: white;
+                flex-direction: column;
+                align-items: center;
+                justify-content: flex-start;
+                padding-top: 50px;
+                transition: var(--transition);
+                box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+            }
+
+            .nav-menu.active {
+                right: 0;
+            }
+
+            .nav-item {
+                margin: 15px 0;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hamburger.active div:nth-child(1) {
+                transform: rotate(-45deg) translate(-5px, 6px);
+            }
+
+            .hamburger.active div:nth-child(2) {
+                opacity: 0;
+            }
+
+            .hamburger.active div:nth-child(3) {
+                transform: rotate(45deg) translate(-5px, -6px);
+            }
+
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+
+            .hero-buttons {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 250px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .section {
+                padding: 60px 0;
+            }
+
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+            
+            .logo-text {
+                display: none;
+            }
+            
+            .story-visual {
+                height: 400px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-img">
+                    <div class="logo-graphic">
+                        <span>TMF</span>
+                    </div>
+                </div>
+                <div class="logo-text">
+                    <div class="logo-main">THABISO MONYANE FOUNDATION</div>
+                    <div class="logo-tagline">FROM PITCH TO PURPOSE</div>
+                </div>
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li class="nav-item"><a href="#home" class="nav-link">Home</a></li>
+                    <li class="nav-item"><a href="#story" class="nav-link">Thabiso's Story</a></li>
+                    <li class="nav-item"><a href="#about" class="nav-link">About</a></li>
+                    <li class="nav-item"><a href="#programs" class="nav-link">Programs</a></li>
+                    <li class="nav-item"><a href="#news" class="nav-link">News</a></li>
+                    <li class="nav-item"><a href="#get-involved" class="nav-link">Get Involved</a></li>
+                    <li class="nav-item"><a href="#contact" class="nav-link">Contact</a></li>
+                </ul>
+                <div class="hamburger">
+                    <div></div>
+                    <div></div>
+                    <div></div>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1>FROM PITCH TO PURPOSE</h1>
+            <p>Empowering South African youth through education, sports, and community development</p>
+            <div class="hero-buttons">
+                <a href="#story" class="btn btn-outline">Thabiso's Story</a>
+                <a href="#get-involved" class="btn btn-secondary">Get Involved</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Thabiso's Story Section -->
+    <section class="section story" id="story">
+        <div class="container">
+            <div class="section-title">
+                <h2>Thabiso's Story</h2>
+                <p>The journey from Tembisa to purpose-driven leadership</p>
+            </div>
+            <div class="story-content">
+                <div class="story-text">
+                    <p>Growing up in the Elindinga section of Tembisa, life was far from easy. But those challenges taught me the true meaning of hard work, perseverance, and resilience. My faith in God has always been my guiding light, and my family has been my steadfast anchor.</p>
+                    
+                    <p>It was my older brother who first introduced me to football at the age of eight, and from that moment, it became more than just a game—it became my passion and my purpose. Through the highs and lows, I learnt that dreams are worth chasing relentlessly, no matter the obstacles.</p>
+                    
+                    <div class="quote">
+                        "Now, I want to pay it forward. Through my foundation, I strive to show young people from similar backgrounds that their circumstances do not define their destiny."
+                    </div>
+                    
+                    <p>With hard work, sacrifice, and discipline, anything is possible. I believe in empowering the next generation to rise, to dream boldly, and to reach their fullest potential.</p>
+                    
+                    <p>The Thabiso Monyane Foundation is built on the principles that shaped my journey - resilience, faith, and the belief that every young person deserves the opportunity to succeed, regardless of their starting point.</p>
+                    
+                    <a href="#programs" class="btn btn-primary" style="margin-top: 20px;">Our Programs</a>
+                </div>
+                <div class="story-image">
+                    <div class="story-visual">
+                        <div class="story-icon">
+                            <i class="fas fa-futbol"></i>
+                        </div>
+                        <h3>From Pitch to Purpose</h3>
+                        <p>Thabiso James Monyane</p>
+                        <p style="margin-top: 20px; font-size: 0.9rem;">Founder & CEO</p>
+                        <p style="font-size: 0.9rem;">Thabiso Monyane Foundation</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="section about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Us</h2>
+                <p>Founded by Thabiso James Monyane</p>
+            </div>
+            <div class="about-content">
+                <div class="about-text">
+                    <p>The Thabiso Monyane Foundation is a youth-driven, impact-focused organization committed to empowering South African youth through education, sports, and community development. Our mission is to create opportunities, build resilience, and inspire purpose in every young person we reach.</p>
+                    
+                    <h3>Vision</h3>
+                    <p>To nurture a generation of purpose-driven youth who lead with integrity, resilience, and hope.</p>
+                    
+                    <h3>Mission</h3>
+                    <p>To empower young people through education, sports, and social programs that develop leadership, self-worth, and community upliftment.</p>
+                </div>
+                <div class="about-image">
+                    <div class="value-card" style="height: 400px; display: flex; align-items: center; justify-content: center; flex-direction: column;">
+                        <div class="logo-graphic" style="width: 100px; height: 100px; font-size: 1.8rem; margin-bottom: 20px;">
+                            <span>TMF</span>
+                        </div>
+                        <h3>Our Founder</h3>
+                        <p style="text-align: center; padding: 0 20px;">Thabiso James Monyane - From Tembisa to Professional Football</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-pray"></i></div>
+                    <h3>Faith</h3>
+                    <p>Guided by purpose and belief in greater possibilities.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h3>Integrity</h3>
+                    <p>Doing what's right, even when no one is watching.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-trophy"></i></div>
+                    <h3>Excellence</h3>
+                    <p>Striving for impact through commitment and hard work.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-hands-helping"></i></div>
+                    <h3>Empowerment</h3>
+                    <p>Creating opportunities for others to rise.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon"><i class="fas fa-users"></i></div>
+                    <h3>Community</h3>
+                    <p>Building together for sustainable change.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="section team">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Team</h2>
+                <p>Meet the people behind the foundation</p>
+            </div>
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-img">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Thabiso James Monyane</h3>
+                        <p class="member-role">Founder & CEO</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-img">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Frans Monyane</h3>
+                        <p class="member-role">Chairperson</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-img">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Luvo Ngxabazi</h3>
+                        <p class="member-role">Member</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div class="member-img">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Kagisho Morgan</h3>
+                        <p class="member-role">Member</p>
+                    </div>
+                </div>
+                <div class="team-member">
+                    <div img="images/Bongs.png">
+                        <i class="fas fa-user"></i>
+                    </div>
+                    <div class="member-info">
+                        <h3 class="member-name">Bongani Nkosi</h3>
+                        <p class="member-role">Member</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="section programs" id="programs">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Programs</h2>
+                <p>Initiatives that create lasting impact</p>
+            </div>
+            <div class="programs-grid">
+                <div class="program-card">
+                    <div class="program-img">
+                        <i class="fas fa-graduation-cap"></i>
+                    </div>
+                    <div class="program-content">
+                        <h3 class="program-title">Education and Sport</h3>
+                        <p>Empowering youth through access to quality education and sports mentorship programs. We provide school support, and sports training that foster discipline, teamwork, and academic success.</p>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-img">
+                        <i class="fas fa-network-wired"></i>
+                    </div>
+                    <div class="program-content">
+                        <h3 class="program-title">Thabiso Connect</h3>
+                        <p>A business hub initiative linking township organizations and entrepreneurs to mentorship, and market opportunities. It's a bridge between township innovation and mainstream enterprise.</p>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-img">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <div class="program-content">
+                        <h3 class="program-title">School Nutrition</h3>
+                        <p>Fighting hunger in schools by providing nutritious meals and food packs to ensure that learners can focus, grow, and succeed.</p>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-img">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="program-content">
+                        <h3 class="program-title">Men Conversation</h3>
+                        <p>Safe spaces for men to engage, reflect, and redefine masculinity through open dialogue about mental health, responsibility, and positive role modeling.</p>
+                    </div>
+                </div>
+                <div class="program-card">
+                    <div class="program-img">
+                        <i class="fas fa-medkit"></i>
+                    </div>
+                    <div class="program-content">
+                        <h3 class="program-title">Thabiso Sport Clinic</h3>
+                        <p>Community sports clinics offering coaching, sports injury rehabilitation, mentorship, and life skills development for young athletes — nurturing talent both on and off the field.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="section news" id="news">
+        <div class="container">
+            <div class="section-title">
+                <h2>News & Updates</h2>
+                <p>Latest foundation stories, events, and impact highlights</p>
+            </div>
+            <div class="news-grid">
+                <div class="news-card">
+                    <div class="news-img">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">June 15, 2025</div>
+                        <h3 class="news-title">Sports Clinic coming soon</h3>
+                        <p>The foundation will launch a new sports clinic in Tembisa, providing coaching and mentorship to young athletes.</p>
+                        <a href="#" class="btn btn-primary" style="margin-top: 15px;">Read More</a>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-img">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">May 28, 2023</div>
+                        <h3 class="news-title">School Nutrition Program Reaches 5000 Students</h3>
+                        <p>Our school nutrition program has now reached over 5000 students across 15 schools in Gauteng province.</p>
+                        <a href="#" class="btn btn-primary" style="margin-top: 15px;">Read More</a>
+                    </div>
+                </div>
+                <div class="news-card">
+                    <div class="news-img">
+                        <i class="fas fa-newspaper"></i>
+                    </div>
+                    <div class="news-content">
+                        <div class="news-date">April 10, 2023</div>
+                        <h3 class="news-title">Men's Conversation Circles Making Impact</h3>
+                        <p>Our men's conversation initiative has created safe spaces for over 200 men to discuss mental health and positive masculinity.</p>
+                        <a href="#" class="btn btn-primary" style="margin-top: 15px;">Read More</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Partners Section -->
+    <section class="section">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Partners</h2>
+                <p>Organizations that support our mission</p>
+            </div>
+            <div class="partners-grid">
+                <div class="partner-logo">Partner 1</div>
+                <div class="partner-logo">Partner 2</div>
+                <div class="partner-logo">Partner 3</div>
+                <div class="partner-logo">Partner 4</div>
+                <div class="partner-logo">Partner 5</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Get Involved Section -->
+    <section class="section get-involved" id="get-involved">
+        <div class="container">
+            <div class="section-title">
+                <h2>Get Involved</h2>
+                <p>Be part of the movement. Together, we can change lives.</p>
+            </div>
+            <div class="involve-grid">
+                <div class="involve-card">
+                    <div class="involve-icon"><i class="fas fa-hand-holding-usd"></i></div>
+                    <h3>Donate</h3>
+                    <p>Support our programs directly with a financial contribution.</p>
+                    <a href="#" class="btn btn-secondary" style="margin-top: 20px;">Donate Now</a>
+                </div>
+                <div class="involve-card">
+                    <div class="involve-icon"><i class="fas fa-handshake"></i></div>
+                    <h3>Partner With Us</h3>
+                    <p>Collaborate for social impact through corporate partnerships.</p>
+                    <a href="#contact" class="btn btn-secondary" style="margin-top: 20px;">Partner Now</a>
+                </div>
+                <div class="involve-card">
+                    <div class="involve-icon"><i class="fas fa-gift"></i></div>
+                    <h3>Legacy Gift</h3>
+                    <p>Leave a lasting legacy through planned giving.</p>
+                    <a href="#contact" class="btn btn-secondary" style="margin-top: 20px;">Learn More</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Gallery Section -->
+    <section class="section gallery">
+        <div class="container">
+            <div class="section-title">
+                <h2>Gallery</h2>
+                <p>Moments from our community events and programs</p>
+            </div>
+            <div class="gallery-grid">
+                <div class="gallery-item">
+                    <i class="fas fa-image"></i>
+                </div>
+                <div class="gallery-item">
+                    <i class="fas fa-image"></i>
+                </div>
+                <div class="gallery-item">
+                    <i class="fas fa-image"></i>
+                </div>
+                <div class="gallery-item">
+                    <i class="fas fa-image"></i>
+                </div>
+                <div class="gallery-item">
+                    <i class="fas fa-image"></i>
+                </div>
+                <div class="gallery-item">
+                    <i class="fas fa-image"></i>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="section contact" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>Get in touch to learn more or get involved</p>
+            </div>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <div class="contact-item">
+                        <i class="fas fa-envelope contact-icon"></i>
+                        <div>
+                            <h3>Email</h3>
+                            <p>info@thabisomonyanefoundation.org</p>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <i class="fas fa-clock contact-icon"></i>
+                        <div>
+                            <h3>Office Hours</h3>
+                            <p>Monday - Friday: 9:00 AM - 5:00 PM</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="contact-form">
+                    <form>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Your Name" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="email" class="form-control" placeholder="Your Email" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="Subject">
+                        </div>
+                        <div class="form-group">
+                            <textarea class="form-control" placeholder="Your Message" required></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <div class="footer-logo-img">
+                        <div class="logo-graphic">
+                            <span>TMF</span>
+                        </div>
+                    </div>
+                    <div class="footer-logo-text">THABISO MONYANE FOUNDATION</div>
+                    <div class="footer-tagline">FROM PITCH TO PURPOSE</div>
+                    <div class="footer-about">
+                        <p>Empowering South African youth through education, sports, and community development.</p>
+                    </div>
+                    <div class="social-links">
+                        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#story">Thabiso's Story</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#programs">Programs</a></li>
+                        <li><a href="#news">News</a></li>
+                        <li><a href="#get-involved">Get Involved</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Info</h3>
+                    <p><i class="fas fa-envelope"></i> info@thabisomonyanefoundation.org</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Thabiso Monyane Foundation. All Rights Reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Header scroll effect
+        window.addEventListener('scroll', function() {
+            const header = document.getElementById('header');
+            if (window.scrollY > 100) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Mobile menu toggle
+        const hamburger = document.querySelector('.hamburger');
+        const navMenu = document.querySelector('.nav-menu');
+
+        hamburger.addEventListener('click', function() {
+            hamburger.classList.toggle('active');
+            navMenu.classList.toggle('active');
+        });
+
+        // Close mobile menu when clicking on a link
+        document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', () => {
+            hamburger.classList.remove('active');
+            navMenu.classList.remove('active');
+        }));
+    </script>
+</body>
+</html>
