@@ -1,0 +1,2077 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>APEX LEGACY MANAGEMENT | Boutique Wealth & Legacy Management</title>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Three.js for 3D Graphics -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.128.0/examples/js/controls/OrbitControls.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&family=Oswald:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        /* ===== CSS STYLES ===== */
+        :root {
+            /* GOLD DOMINANT COLOR SCHEME */
+            --primary-gold: #C9A96E;
+            --secondary-gold: #B89446;
+            --dark-gold: #A67C00;
+            --light-gold: #E6D5B8;
+            --white: #FFFFFF;
+            --dark-bg: #0A0A0A;
+            --light-bg: #1A1A1A;
+            --medium-gray: #2A2A2A;
+            --text-light: #F5F5F5;
+            --text-gray: #CCCCCC;
+            
+            /* Gradients */
+            --gold-gradient: linear-gradient(135deg, #C9A96E 0%, #B89446 50%, #A67C00 100%);
+            --dark-gradient: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 50%, #2A2A2A 100%);
+            --gold-dark-gradient: linear-gradient(135deg, #C9A96E 0%, #1A1A1A 50%, #0A0A0A 100%);
+            
+            /* Package Colors */
+            --silver-color: #C0C0C0;
+            --platinum-color: #E5E4E2;
+            
+            /* Shadows */
+            --shadow-sm: 0 2px 10px rgba(0, 0, 0, 0.3);
+            --shadow-md: 0 5px 20px rgba(0, 0, 0, 0.4);
+            --shadow-lg: 0 10px 30px rgba(0, 0, 0, 0.5);
+            --shadow-gold: 0 5px 15px rgba(201, 169, 110, 0.4);
+        }
+        
+        /* Reset & Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--text-gray);
+            background-color: var(--dark-bg);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+        
+        h1, h2, h3, h4, h5 {
+            font-family: 'Oswald', sans-serif;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            line-height: 1.2;
+            color: var(--primary-gold);
+        }
+        
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        
+        ul {
+            list-style: none;
+        }
+        
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            background: var(--gold-gradient);
+            color: var(--dark-bg);
+            padding: 15px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: none;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--shadow-gold);
+        }
+        
+        .btn:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            transition: left 0.7s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(201, 169, 110, 0.6);
+            color: var(--dark-bg);
+        }
+        
+        .btn:hover:before {
+            left: 100%;
+        }
+        
+        .btn-outline {
+            background: transparent;
+            border: 2px solid var(--primary-gold);
+            color: var(--primary-gold);
+            box-shadow: 0 10px 20px rgba(201, 169, 110, 0.2);
+        }
+        
+        .btn-outline:hover {
+            background-color: var(--primary-gold);
+            color: var(--dark-bg);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(201, 169, 110, 0.3);
+        }
+        
+        /* Section Title Styles */
+        .section-title {
+            text-align: center;
+            margin-bottom: 80px;
+            position: relative;
+        }
+        
+        .section-title h2 {
+            font-size: 3rem;
+            color: var(--primary-gold);
+            position: relative;
+            display: inline-block;
+            padding-bottom: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .section-title h2:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gold-gradient);
+            border-radius: 2px;
+        }
+        
+        .section-title p {
+            font-size: 1.2rem;
+            color: var(--text-gray);
+            max-width: 700px;
+            margin: 20px auto 0;
+            font-weight: 300;
+        }
+        
+        /* Header & Navigation */
+        header {
+            background-color: rgba(10, 10, 10, 0.95);
+            backdrop-filter: blur(10px);
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+            padding: 15px 0;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border-bottom: 2px solid var(--primary-gold);
+        }
+        
+        header.scrolled {
+            padding: 10px 0;
+            box-shadow: var(--shadow-md);
+            background-color: rgba(10, 10, 10, 0.98);
+        }
+        
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .logo:hover {
+            transform: scale(1.02);
+        }
+        
+        .logo-img {
+            height: 60px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo-img img {
+            height: 100%;
+            width: auto;
+            filter: brightness(1) invert(0);
+            transition: all 0.3s ease;
+        }
+        
+        .logo-img img:hover {
+            filter: brightness(1.1) invert(0) drop-shadow(0 0 10px rgba(201, 169, 110, 0.7));
+        }
+        
+        nav ul {
+            display: flex;
+            gap: 25px;
+        }
+        
+        nav ul li {
+            position: relative;
+        }
+        
+        nav ul li a {
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1.2px;
+            transition: all 0.3s;
+            position: relative;
+            padding: 8px 0;
+            display: inline-block;
+        }
+        
+        nav ul li a:hover {
+            color: var(--primary-gold);
+        }
+        
+        nav ul li a.active {
+            color: var(--primary-gold);
+        }
+        
+        nav ul li a:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gold-gradient);
+            transition: width 0.3s ease;
+        }
+        
+        nav ul li a:hover:after,
+        nav ul li a.active:after {
+            width: 100%;
+        }
+        
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--primary-gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .mobile-menu-btn:hover {
+            transform: scale(1.1);
+        }
+        
+        .mobile-menu {
+            position: fixed;
+            top: 70px;
+            left: 0;
+            width: 100%;
+            background-color: rgba(10, 10, 10, 0.98);
+            padding: 30px;
+            box-shadow: var(--shadow-md);
+            z-index: 999;
+            backdrop-filter: blur(10px);
+            display: none;
+            border-top: 2px solid var(--primary-gold);
+        }
+        
+        .mobile-menu ul {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+        
+        .mobile-menu ul li a {
+            color: var(--text-light);
+            font-weight: 500;
+            font-size: 1.2rem;
+            display: block;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(201, 169, 110, 0.2);
+            transition: all 0.3s;
+        }
+        
+        .mobile-menu ul li a:hover {
+            color: var(--primary-gold);
+            padding-left: 10px;
+        }
+        
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            min-height: 800px;
+            position: relative;
+            background: var(--dark-gradient);
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .hero:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1553877522-43269d4ea984?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            opacity: 0.2;
+            z-index: 0;
+        }
+        
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 700px;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            line-height: 1.1;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.5);
+            background: linear-gradient(90deg, var(--primary-gold), var(--secondary-gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+        
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 40px;
+            opacity: 0.9;
+            font-weight: 300;
+            max-width: 600px;
+            color: var(--text-gray);
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+        
+        .interactive-notice {
+            position: absolute;
+            bottom: 30px;
+            right: 30px;
+            background: rgba(10, 10, 10, 0.8);
+            color: var(--primary-gold);
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            z-index: 10;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            animation: pulse 2s infinite;
+        }
+        
+        /* About Section */
+        .about {
+            padding: 120px 0;
+            background-color: var(--light-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .about:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1551836026-d5c2c0b4d4b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            opacity: 0.1;
+            filter: sepia(100%) hue-rotate(40deg) saturate(50%);
+        }
+        
+        .about-content {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .about-text {
+            flex: 1;
+        }
+        
+        .about-text h3 {
+            font-size: 2rem;
+            margin-bottom: 25px;
+            color: var(--primary-gold);
+            position: relative;
+            padding-left: 20px;
+        }
+        
+        .about-text h3:before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 4px;
+            background: var(--gold-gradient);
+        }
+        
+        .about-text p {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            color: var(--text-gray);
+        }
+        
+        .about-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        
+        .stat {
+            text-align: center;
+            padding: 25px;
+            background: rgba(201, 169, 110, 0.1);
+            border-radius: 15px;
+            min-width: 150px;
+            transition: transform 0.3s ease;
+            border: 1px solid rgba(201, 169, 110, 0.2);
+        }
+        
+        .stat:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-md);
+            background: rgba(201, 169, 110, 0.15);
+            border-color: var(--primary-gold);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--primary-gold);
+            font-family: 'Oswald', sans-serif;
+            margin-bottom: 5px;
+        }
+        
+        .stat-label {
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--text-gray);
+            font-weight: 600;
+        }
+        
+        .about-visual {
+            flex: 1;
+            height: 450px;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+            box-shadow: var(--shadow-lg);
+            border: 2px solid var(--primary-gold);
+        }
+        
+        #about-canvas {
+            width: 100%;
+            height: 100%;
+        }
+        
+        /* Services Section */
+        .services {
+            padding: 120px 0;
+            background: var(--gold-dark-gradient);
+            color: var(--text-light);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .services:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1556761175-b413da4baf72?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            opacity: 0.1;
+            filter: sepia(100%) hue-rotate(40deg) saturate(50%);
+        }
+        
+        .services .section-title h2 {
+            color: var(--primary-gold);
+        }
+        
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .service-card {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            padding: 40px 30px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(201, 169, 110, 0.2);
+        }
+        
+        .service-card:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--gold-gradient);
+        }
+        
+        .service-card:hover {
+            transform: translateY(-15px);
+            background: rgba(201, 169, 110, 0.1);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-gold);
+        }
+        
+        .service-icon {
+            font-size: 3rem;
+            color: var(--primary-gold);
+            margin-bottom: 25px;
+            background: rgba(201, 169, 110, 0.2);
+            width: 80px;
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .service-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 20px;
+            color: var(--primary-gold);
+        }
+        
+        .service-card p {
+            color: var(--text-gray);
+            font-weight: 300;
+        }
+        
+        /* Insurance Section */
+        .insurance {
+            padding: 120px 0;
+            background-color: var(--dark-bg);
+            position: relative;
+            overflow: hidden;
+            border-top: 2px solid var(--primary-gold);
+            border-bottom: 2px solid var(--primary-gold);
+        }
+        
+        .insurance:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1554224155-6726b3ff858f?ixlib=rb-4.0.3&auto=format&fit=crop&w=2011&q=80') center/cover no-repeat;
+            opacity: 0.05;
+            filter: sepia(100%) hue-rotate(40deg) saturate(50%);
+        }
+        
+        .insurance-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .insurance-category {
+            background-color: var(--light-bg);
+            border-radius: 20px;
+            padding: 40px 35px;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid rgba(201, 169, 110, 0.2);
+        }
+        
+        .insurance-category:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-gold);
+        }
+        
+        .insurance-category:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 5px;
+            background: var(--gold-gradient);
+        }
+        
+        .insurance-category h3 {
+            color: var(--primary-gold);
+            font-size: 1.6rem;
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary-gold);
+        }
+        
+        .insurance-list {
+            list-style: none;
+        }
+        
+        .insurance-list li {
+            padding: 15px 0;
+            border-bottom: 1px solid var(--medium-gray);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .insurance-list li:hover {
+            transform: translateX(10px);
+            color: var(--primary-gold);
+        }
+        
+        .insurance-list li:last-child {
+            border-bottom: none;
+        }
+        
+        .insurance-list li i {
+            color: var(--primary-gold);
+            margin-right: 15px;
+            font-size: 1rem;
+            background: rgba(201, 169, 110, 0.1);
+            width: 30px;
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+        }
+        
+        .insurance-cta {
+            text-align: center;
+            background: linear-gradient(135deg, rgba(201, 169, 110, 0.1), rgba(26, 26, 26, 0.8));
+            color: var(--text-light);
+            padding: 60px 40px;
+            border-radius: 20px;
+            margin-top: 30px;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            box-shadow: var(--shadow-gold);
+            border: 1px solid rgba(201, 169, 110, 0.3);
+        }
+        
+        .insurance-cta:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            opacity: 0.1;
+            z-index: -1;
+            filter: sepia(100%) hue-rotate(40deg) saturate(50%);
+        }
+        
+        .insurance-cta h3 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+            color: var(--primary-gold);
+        }
+        
+        .insurance-cta p {
+            font-size: 1.1rem;
+            max-width: 700px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+            color: var(--text-gray);
+        }
+        
+        /* Packages Section */
+        .packages {
+            padding: 120px 0;
+            background-color: var(--light-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .packages:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 40%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1559136555-9303baea8ebd?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            opacity: 0.05;
+            filter: sepia(100%) hue-rotate(40deg) saturate(50%);
+        }
+        
+        .packages-container {
+            display: flex;
+            justify-content: center;
+            align-items: stretch;
+            gap: 30px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .package-card {
+            background-color: var(--light-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            width: 320px;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            border: 1px solid rgba(201, 169, 110, 0.2);
+        }
+        
+        .package-card:hover {
+            transform: translateY(-20px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-gold);
+        }
+        
+        .package-card.most-popular {
+            border: 2px solid var(--primary-gold);
+        }
+        
+        .package-card.most-popular:before {
+            content: 'MOST POPULAR';
+            position: absolute;
+            top: 20px;
+            right: -30px;
+            background: var(--gold-gradient);
+            color: var(--dark-bg);
+            padding: 8px 35px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            transform: rotate(45deg);
+            z-index: 2;
+            box-shadow: var(--shadow-gold);
+        }
+        
+        /* Package Headers - Color Coded with Gold Accents */
+        .package-card .package-header.silver {
+            background: linear-gradient(135deg, var(--silver-color), #A9A9A9);
+            color: var(--dark-bg);
+            border-bottom: 3px solid var(--silver-color);
+        }
+        
+        .package-card .package-header.gold {
+            background: var(--gold-gradient);
+            color: var(--dark-bg);
+            border-bottom: 3px solid var(--secondary-gold);
+        }
+        
+        .package-card .package-header.platinum {
+            background: linear-gradient(135deg, var(--platinum-color), #C0C0C0);
+            color: var(--dark-bg);
+            border-bottom: 3px solid var(--platinum-color);
+        }
+        
+        .package-header {
+            padding: 35px 25px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .package-name {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            position: relative;
+            z-index: 1;
+            font-weight: 700;
+        }
+        
+        .package-price {
+            font-size: 3rem;
+            font-weight: 700;
+            font-family: 'Oswald', sans-serif;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .package-price span {
+            font-size: 1.2rem;
+            font-weight: 400;
+        }
+        
+        .package-features {
+            padding: 40px 30px;
+            background-color: var(--light-bg);
+        }
+        
+        .package-features ul {
+            list-style: none;
+        }
+        
+        .package-features ul li {
+            padding: 12px 0;
+            border-bottom: 1px solid var(--medium-gray);
+            display: flex;
+            align-items: center;
+            transition: all 0.3s ease;
+        }
+        
+        .package-features ul li:hover {
+            color: var(--primary-gold);
+            transform: translateX(5px);
+        }
+        
+        .package-features ul li:last-child {
+            border-bottom: none;
+        }
+        
+        .package-features ul li i {
+            color: var(--primary-gold);
+            margin-right: 15px;
+            font-size: 1rem;
+        }
+        
+        .package-footer {
+            padding: 0 30px 40px;
+            text-align: center;
+        }
+        
+        /* Clients Section */
+        .clients-section {
+            padding: 120px 0;
+            background-color: var(--dark-bg);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .clients-section:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            opacity: 0.05;
+            filter: sepia(100%) hue-rotate(40deg) saturate(50%);
+        }
+        
+        .clients-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .client-card {
+            background-color: var(--light-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(201, 169, 110, 0.2);
+        }
+        
+        .client-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-gold);
+        }
+        
+        .client-image {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--gold-gradient);
+            margin-bottom: 25px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            color: var(--dark-bg);
+            font-weight: 700;
+            box-shadow: var(--shadow-gold);
+        }
+        
+        .client-quote {
+            font-style: italic;
+            margin-bottom: 25px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            color: var(--text-gray);
+            position: relative;
+            padding: 0 20px;
+        }
+        
+        .client-quote:before,
+        .client-quote:after {
+            content: '"';
+            font-size: 3rem;
+            color: var(--primary-gold);
+            position: absolute;
+            opacity: 0.3;
+        }
+        
+        .client-quote:before {
+            top: -15px;
+            left: 0;
+        }
+        
+        .client-quote:after {
+            bottom: -30px;
+            right: 0;
+        }
+        
+        .client-name {
+            font-weight: 700;
+            color: var(--primary-gold);
+            font-size: 1.2rem;
+            margin-top: 10px;
+        }
+        
+        /* Team Section */
+        .team {
+            padding: 120px 0;
+            background-color: var(--light-bg);
+            position: relative;
+            overflow: hidden;
+            border-top: 2px solid var(--primary-gold);
+        }
+        
+        .team:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1551836026-d5c2c0b4d4b2?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            opacity: 0.05;
+            filter: sepia(100%) hue-rotate(40deg) saturate(50%);
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 40px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .team-member {
+            background-color: var(--light-bg);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-md);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            border: 1px solid rgba(201, 169, 110, 0.2);
+        }
+        
+        .team-member:hover {
+            transform: translateY(-15px);
+            box-shadow: var(--shadow-lg);
+            border-color: var(--primary-gold);
+        }
+        
+        .member-image {
+            height: 300px;
+            background: var(--gold-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--dark-bg);
+            font-size: 5rem;
+            font-weight: 700;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .member-info {
+            padding: 30px;
+            background-color: var(--light-bg);
+        }
+        
+        .member-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--primary-gold);
+        }
+        
+        .member-info p {
+            color: var(--text-gray);
+            font-weight: 600;
+            font-size: 1rem;
+            letter-spacing: 1px;
+        }
+        
+        /* Contact Section */
+        .contact-section {
+            padding: 120px 0;
+            background: var(--dark-gradient);
+            color: var(--text-light);
+            position: relative;
+            overflow: hidden;
+            border-top: 2px solid var(--primary-gold);
+        }
+        
+        .contact-section:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            opacity: 0.1;
+            filter: sepia(100%) hue-rotate(40deg) saturate(50%);
+        }
+        
+        .contact-section .section-title h2 {
+            color: var(--primary-gold);
+        }
+        
+        .contact-container {
+            display: flex;
+            gap: 60px;
+            flex-wrap: wrap;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .contact-info {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(201, 169, 110, 0.2);
+        }
+        
+        .contact-info h3 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--primary-gold);
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .contact-info h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--gold-gradient);
+        }
+        
+        .contact-info p {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            opacity: 0.9;
+            color: var(--text-gray);
+        }
+        
+        .contact-details {
+            margin-top: 40px;
+        }
+        
+        .contact-detail {
+            display: flex;
+            align-items: center;
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
+        
+        .contact-detail:hover {
+            transform: translateX(10px);
+            color: var(--primary-gold);
+        }
+        
+        .contact-detail i {
+            color: var(--primary-gold);
+            font-size: 1.3rem;
+            margin-right: 20px;
+            width: 50px;
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(201, 169, 110, 0.1);
+            border-radius: 50%;
+        }
+        
+        .contact-form {
+            flex: 1;
+            min-width: 300px;
+            padding: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(201, 169, 110, 0.2);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: 500;
+            color: var(--primary-gold);
+            letter-spacing: 1px;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 15px 20px;
+            border-radius: 10px;
+            border: 1px solid rgba(201, 169, 110, 0.3);
+            background: rgba(10, 10, 10, 0.5);
+            color: var(--text-light);
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-gold);
+            box-shadow: 0 0 0 2px rgba(201, 169, 110, 0.2);
+            background: rgba(10, 10, 10, 0.8);
+        }
+        
+        select.form-control {
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='%23C9A96E' viewBox='0 0 16 16'%3E%3Cpath d='M7.247 11.14 2.451 5.658C1.885 5.013 2.345 4 3.204 4h9.592a1 1 0 0 1 .753 1.659l-4.796 5.48a1 1 0 0 1-1.506 0z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 20px center;
+            background-size: 16px;
+        }
+        
+        textarea.form-control {
+            min-height: 180px;
+            resize: vertical;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: #0A0A0A;
+            color: rgba(255, 255, 255, 0.7);
+            padding: 80px 0 40px;
+            position: relative;
+            overflow: hidden;
+            border-top: 2px solid var(--primary-gold);
+        }
+        
+        footer:before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('https://images.unsplash.com/photo-1556761175-4d6c2b0b4b4b?ixlib=rb-4.0.3&auto=format&fit=crop&w=2070&q=80') center/cover no-repeat;
+            opacity: 0.05;
+            filter: sepia(100%) hue-rotate(40deg) saturate(50%);
+        }
+        
+        .footer-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 50px;
+            margin-bottom: 60px;
+            position: relative;
+            z-index: 1;
+        }
+        
+        .footer-logo {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .footer-logo-img {
+            height: 50px;
+            margin-bottom: 20px;
+        }
+        
+        .footer-logo-img img {
+            height: 100%;
+            width: auto;
+            filter: brightness(1) invert(0);
+            transition: all 0.3s ease;
+        }
+        
+        .footer-logo-img img:hover {
+            filter: brightness(1.1) invert(0) drop-shadow(0 0 10px rgba(201, 169, 110, 0.7));
+        }
+        
+        .footer-logo p {
+            margin-top: 20px;
+            line-height: 1.8;
+            font-size: 1rem;
+            max-width: 300px;
+            color: var(--text-gray);
+        }
+        
+        .footer-links h4, .footer-services h4, .footer-insurance h4 {
+            color: var(--primary-gold);
+            font-size: 1.3rem;
+            margin-bottom: 25px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+        
+        .footer-links h4:after, .footer-services h4:after, .footer-insurance h4:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--gold-gradient);
+        }
+        
+        .footer-links ul, .footer-services ul, .footer-insurance ul {
+            list-style: none;
+        }
+        
+        .footer-links ul li, .footer-services ul li, .footer-insurance ul li {
+            margin-bottom: 15px;
+        }
+        
+        .footer-links ul li a, .footer-services ul li a, .footer-insurance ul li a {
+            color: var(--text-gray);
+            transition: all 0.3s ease;
+            display: inline-block;
+            padding: 5px 0;
+            position: relative;
+        }
+        
+        .footer-links ul li a:hover, .footer-services ul li a:hover, .footer-insurance ul li a:hover {
+            color: var(--primary-gold);
+            transform: translateX(10px);
+        }
+        
+        .footer-links ul li a:after, .footer-services ul li a:after, .footer-insurance ul li a:after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+        
+        .footer-links ul li a:hover:after, .footer-services ul li a:hover:after, .footer-insurance ul li a:hover:after {
+            right: -15px;
+            opacity: 1;
+        }
+        
+        .copyright {
+            text-align: center;
+            padding-top: 40px;
+            border-top: 1px solid rgba(201, 169, 110, 0.2);
+            font-size: 0.9rem;
+            color: var(--text-gray);
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(201, 169, 110, 0.4);
+            }
+            70% {
+                box-shadow: 0 0 0 10px rgba(201, 169, 110, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(201, 169, 110, 0);
+            }
+        }
+        
+        @keyframes shine {
+            0% {
+                background-position: -100px;
+            }
+            100% {
+                background-position: 200px;
+            }
+        }
+        
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 12px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--dark-bg);
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold-gradient);
+            border-radius: 6px;
+            border: 2px solid var(--dark-bg);
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: linear-gradient(to bottom, var(--secondary-gold), var(--primary-gold));
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 1200px) {
+            .hero h1 {
+                font-size: 3.5rem;
+            }
+        }
+        
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            
+            .about-content {
+                flex-direction: column;
+            }
+            
+            .about-visual {
+                width: 100%;
+            }
+            
+            .insurance-categories {
+                grid-template-columns: 1fr;
+            }
+            
+            .section-title h2 {
+                font-size: 2.5rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            nav ul {
+                display: none;
+            }
+            
+            .mobile-menu-btn {
+                display: block;
+            }
+            
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero p {
+                font-size: 1.1rem;
+            }
+            
+            section {
+                padding: 80px 0;
+            }
+            
+            .section-title h2 {
+                font-size: 2.2rem;
+            }
+            
+            .logo-img {
+                height: 50px;
+            }
+            
+            .btn {
+                padding: 12px 25px;
+                font-size: 0.9rem;
+            }
+            
+            .stat {
+                min-width: 120px;
+                padding: 20px;
+            }
+            
+            .stat-number {
+                font-size: 2.5rem;
+            }
+            
+            .contact-container {
+                flex-direction: column;
+            }
+            
+            .package-card.most-popular:before {
+                padding: 6px 25px;
+                font-size: 0.7rem;
+                right: -25px;
+                top: 15px;
+            }
+        }
+        
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .section-title h2 {
+                font-size: 1.8rem;
+            }
+            
+            .about-stats {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .packages-container {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .package-card {
+                width: 100%;
+                max-width: 320px;
+            }
+            
+            .hero-buttons {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            
+            .hero-buttons .btn {
+                width: 100%;
+                text-align: center;
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- ===== HTML STRUCTURE ===== -->
+    
+    <!-- Header & Navigation -->
+    <header id="header">
+        <div class="container header-container">
+            <div class="logo">
+                <div class="logo-img">
+                    <!-- APEX LEGACY MANAGEMENT LOGO -->
+                    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                        <div style="font-family: 'Oswald', sans-serif; font-size: 1.8rem; color: var(--primary-gold); font-weight: 700; letter-spacing: 2px; line-height: 1;">
+                            APEX<br>
+                            <span style="color: var(--white); font-size: 1.4rem;">LEGACY MANAGEMENT</span>
+                        </div>
+                        <div style="font-size: 0.7rem; color: var(--text-gray); letter-spacing: 3px; margin-top: 3px;">
+                            WEALTH & LEGACY SOLUTIONS
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <nav id="desktop-nav">
+                <ul>
+                    <li><a href="#home" class="active">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#services">Services</a></li>
+                    <li><a href="#insurance">Insurance</a></li>
+                    <li><a href="#packages">Packages</a></li>
+                    <li><a href="#clients">Clients</a></li>
+                    <li><a href="#team">Team</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            
+            <button class="mobile-menu-btn" id="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+        
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobile-menu">
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#insurance">Insurance</a></li>
+                <li><a href="#packages">Packages</a></li>
+                <li><a href="#clients">Clients</a></li>
+                <li><a href="#team">Team</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div id="hero-canvas"></div>
+        <div class="container">
+            <div class="hero-content">
+                <h1>APEX LEGACY MANAGEMENT</h1>
+                <p>Boutique wealth and legacy management for high-net-worth individuals, sports professionals, and corporate leaders. Your legacy, perfected in gold.</p>
+                <div class="hero-buttons">
+                    <a href="#packages" class="btn">View Our Packages</a>
+                    <a href="#insurance" class="btn btn-outline">Insurance Solutions</a>
+                </div>
+            </div>
+        </div>
+        <div class="interactive-notice">
+            <i class="fas fa-mouse-pointer"></i> Drag to rotate 3D element
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section class="about" id="about">
+        <div class="container">
+            <div class="section-title">
+                <h2>About Us</h2>
+                <p>Combining decades of expertise with golden strategies to secure and grow your legacy</p>
+            </div>
+            
+            <div class="about-content">
+                <div class="about-text">
+                    <h3>40+ Years of Golden Expertise</h3>
+                    <p>Apex Legacy Management is a boutique wealth and legacy management firm dedicated to high-net-worth individuals, sports professionals and corporate leaders. With over 40+ years of combined experience, our founding team blends elite level expertise in risk management, finance and strategic legacy planning.</p>
+                    <p>We provide holistic solutions that empower clients to protect, grow and transfer wealth across generations. Our approach is personalized, focusing on each client's unique goals and circumstances to create tailored strategies that stand the test of time.</p>
+                    <p>At Apex Legacy Management, we believe true wealth is measured not just in financial terms, but in the lasting golden legacy you create.</p>
+                    
+                    <div class="about-stats">
+                        <div class="stat">
+                            <div class="stat-number">40+</div>
+                            <div class="stat-label">Years Experience</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">50+</div>
+                            <div class="stat-label">Clients Served</div>
+                        </div>
+                        <div class="stat">
+                            <div class="stat-number">R5M+</div>
+                            <div class="stat-label">Assets Managed</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="about-visual">
+                    <div id="about-canvas"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="services">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Services</h2>
+                <p>Golden solutions tailored to protect, grow, and transfer your wealth</p>
+            </div>
+            
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h3>Wealth Legacy Planning</h3>
+                    <p>Comprehensive strategies to protect, grow and transfer wealth across generations with tax efficiency and asset protection.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    <h3>Strategic Risk Advisory</h3>
+                    <p>Identify, assess and mitigate financial risks with sophisticated strategies tailored to your unique situation.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h3>Athlete & Talent Management</h3>
+                    <p>End-to-end career management for sports professionals, from contract negotiations to long-term financial planning.</p>
+                </div>
+                
+                <div class="service-card">
+                    <div class="service-icon">
+                        <i class="fas fa-bullhorn"></i>
+                    </div>
+                    <h3>Brand & PR Management</h3>
+                    <p>Build and protect your personal brand with strategic PR initiatives and media relations expertise.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Insurance Section -->
+    <section class="insurance" id="insurance">
+        <div class="container">
+            <div class="section-title">
+                <h2>Comprehensive Protection Solutions</h2>
+                <p>Specialized insurance and risk management solutions with golden standards</p>
+            </div>
+            
+            <div class="insurance-categories">
+                <div class="insurance-category">
+                    <h3>Personal Protection Solutions</h3>
+                    <ul class="insurance-list">
+                        <li><i class="fas fa-car"></i> Apex Elite Vehicle Insurance</li>
+                        <li><i class="fas fa-home"></i> Apex Home & Estate Cover</li>
+                        <li><i class="fas fa-umbrella"></i> Apex All-Risk Lifestyle Cover</li>
+                        <li><i class="fas fa-running"></i> Apex Athlete Protection Plan</li>
+                        <li><i class="fas fa-plane"></i> Apex Travel & Competition Protection</li>
+                    </ul>
+                </div>
+                
+                <div class="insurance-category">
+                    <h3>Commercial & Corporate Protection</h3>
+                    <ul class="insurance-list">
+                        <li><i class="fas fa-truck"></i> Apex Commercial Fleet & Logistics Cover</li>
+                        <li><i class="fas fa-shield-alt"></i> Apex CyberGuard</li>
+                        <li><i class="fas fa-tools"></i> Apex Tools Risk Cover</li>
+                        <li><i class="fas fa-user-tie"></i> Apex Directors & Executives (D&O)</li>
+                    </ul>
+                </div>
+                
+                <div class="insurance-category">
+                    <h3>Specialized Risk Solutions</h3>
+                    <ul class="insurance-list">
+                        <li><i class="fas fa-medal"></i> Apex SportsPro Insurance</li>
+                        <li><i class="fas fa-building-shield"></i> Apex Business Risk Shield</li>
+                        <li><i class="fas fa-family"></i> Apex Legacy Family Asset Cover</li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="insurance-cta">
+                <h3>Golden Protection Tailored to Your Needs</h3>
+                <p>Our insurance solutions are designed with the unique needs of high-net-worth individuals, athletes, and business leaders in mind. Contact us for a personalized risk assessment and comprehensive coverage plan.</p>
+                <a href="#contact" class="btn" style="margin-top: 20px;">Get a Custom Quote</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Packages Section -->
+    <section class="packages" id="packages">
+        <div class="container">
+            <div class="section-title">
+                <h2>PR & Brand Legacy Packages</h2>
+                <p>Comprehensive personal branding and PR solutions designed to elevate your public profile and build a lasting golden legacy</p>
+            </div>
+            
+            <div class="packages-container">
+                <!-- Silver Package -->
+                <div class="package-card">
+                    <div class="package-header silver">
+                        <div class="package-name">Silver</div>
+                        <div class="package-price">R199<span>/month</span></div>
+                    </div>
+                    <div class="package-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Social media basics</li>
+                            <li><i class="fas fa-check"></i> Personal branding 101</li>
+                            <li><i class="fas fa-check"></i> Monthly profile review</li>
+                            <li><i class="fas fa-check"></i> Entry-level exposure to personal branding and early PR awareness</li>
+                        </ul>
+                    </div>
+                    <div class="package-footer">
+                        <a href="#contact" class="btn">Get Started</a>
+                    </div>
+                </div>
+                
+                <!-- Gold Package (Most Popular) -->
+                <div class="package-card most-popular">
+                    <div class="package-header gold">
+                        <div class="package-name">Gold</div>
+                        <div class="package-price">R399<span>/month</span></div>
+                    </div>
+                    <div class="package-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Everything in Silver +</li>
+                            <li><i class="fas fa-check"></i> One-on-one media training</li>
+                            <li><i class="fas fa-check"></i> Social media setup & strategy</li>
+                            <li><i class="fas fa-check"></i> Digital sports portfolio</li>
+                            <li><i class="fas fa-check"></i> Game highlight clip edits</li>
+                            <li><i class="fas fa-check"></i> Personal brand photoshoot</li>
+                            <li><i class="fas fa-check"></i> Developing athletes ready to take their identity seriously</li>
+                        </ul>
+                    </div>
+                    <div class="package-footer">
+                        <a href="#contact" class="btn">Get Started</a>
+                    </div>
+                </div>
+                
+                <!-- Platinum Package -->
+                <div class="package-card">
+                    <div class="package-header platinum">
+                        <div class="package-name">Platinum</div>
+                        <div class="package-price">R799<span>/month</span></div>
+                    </div>
+                    <div class="package-features">
+                        <ul>
+                            <li><i class="fas fa-check"></i> Everything in Gold +</li>
+                            <li><i class="fas fa-check"></i> Advanced media training</li>
+                            <li><i class="fas fa-check"></i> Comprehensive brand strategy</li>
+                            <li><i class="fas fa-check"></i> Professional portfolio website</li>
+                            <li><i class="fas fa-check"></i> Press release distribution</li>
+                            <li><i class="fas fa-check"></i> Media placement opportunities</li>
+                            <li><i class="fas fa-check"></i> Brand partnership facilitation</li>
+                            <li><i class="fas fa-check"></i> Highly talented, media-ready individuals aiming for professional or international exposure</li>
+                        </ul>
+                    </div>
+                    <div class="package-footer">
+                        <a href="#contact" class="btn">Get Started</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Clients Section -->
+    <section class="clients-section" id="clients">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Clients</h2>
+                <p>Trusted by elite athletes and corporate leaders with golden standards</p>
+            </div>
+            
+            <div class="clients-grid">
+                <div class="client-card">
+                    <div class="client-image">
+                        LM
+                    </div>
+                    <p class="client-quote">"Apex Legacy Management has been instrumental in guiding my career and financial future. Their golden expertise in athlete management is unmatched."</p>
+                    <div class="client-name">Leon Mhaule</div>
+                </div>
+                
+                <div class="client-card">
+                    <div class="client-image">
+                        TM
+                    </div>
+                    <p class="client-quote">"The team at Apex Legacy has helped me build a strong personal brand while securing my financial future. I couldn't be happier with their golden services."</p>
+                    <div class="client-name">Thabiso Monyane</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Team Section -->
+    <section class="team" id="team">
+        <div class="container">
+            <div class="section-title">
+                <h2>Our Team</h2>
+                <p>Meet the golden experts behind your legacy</p>
+            </div>
+            
+            <div class="team-grid">
+                <div class="team-member">
+                    <div class="member-image">
+                        LN
+                    </div>
+                    <div class="member-info">
+                        <h3>Luvo Ngxabazi</h3>
+                        <p>Director- Strategic Risk Advisory</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-image">
+                        KM
+                    </div>
+                    <div class="member-info">
+                        <h3>Kagisho Morgan</h3>
+                        <p>Director- Wealth & Investment</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-image">
+                        FM
+                    </div>
+                    <div class="member-info">
+                        <h3>Frans Monyane</h3>
+                        <p>Director- Talent Scouting & Development</p>
+                    </div>
+                </div>
+                
+                <div class="team-member">
+                    <div class="member-image">
+                        BN
+                    </div>
+                    <div class="member-info">
+                        <h3>Bongani Nkosi</h3>
+                        <p>Director- PR & Brand Legacy</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact-section" id="contact">
+        <div class="container">
+            <div class="section-title">
+                <h2>Contact Us</h2>
+                <p>Begin your golden legacy journey with us today</p>
+            </div>
+            
+            <div class="contact-container">
+                <div class="contact-info">
+                    <h3>Get In Touch</h3>
+                    <p>Reach out to our team to discuss how we can help you build and protect your golden legacy. Our experts are ready to provide personalized solutions.</p>
+                    
+                    <div class="contact-details">
+                        <div class="contact-detail">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@apexlegacymanagement.co.za</span>
+                        </div>
+                        <div class="contact-detail">
+                            <i class="fas fa-clock"></i>
+                            <span>Monday-Friday: 8AM - 5PM</span>
+                        </div>
+                <div class="contact-form">
+                    <form id="contact-form">
+                        <div class="form-group">
+                            <label for="name">Name</label>
+                            <input type="text" id="name" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email">Email</label>
+                            <input type="email" id="email" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="interest">Service Interest</label>
+                            <select id="interest" class="form-control">
+                                <option value="">Select a service</option>
+                                <option value="wealth">Wealth Legacy Planning</option>
+                                <option value="risk">Strategic Risk Advisory</option>
+                                <option value="athlete">Athlete & Talent Management</option>
+                                <option value="brand">Brand & PR Management</option>
+                                <option value="insurance">Insurance Solutions</option>
+                                <option value="silver">Silver Package</option>
+                                <option value="gold">Gold Package</option>
+                                <option value="platinum">Platinum Package</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="message">Message</label>
+                            <textarea id="message" class="form-control" placeholder="Tell us about your golden legacy needs..." required></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn" style="width: 100%;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="footer-container">
+                <div class="footer-logo">
+                    <div class="footer-logo-img">
+                        <!-- APEX LEGACY MANAGEMENT LOGO -->
+                        <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                            <div style="font-family: 'Oswald', sans-serif; font-size: 1.6rem; color: var(--primary-gold); font-weight: 700; letter-spacing: 2px; line-height: 1;">
+                                APEX<br>
+                                <span style="color: var(--white); font-size: 1.2rem;">LEGACY MANAGEMENT</span>
+                            </div>
+                            <div style="font-size: 0.6rem; color: var(--text-gray); letter-spacing: 3px; margin-top: 3px;">
+                                WEALTH & LEGACY SOLUTIONS
+                            </div>
+                        </div>
+                    </div>
+                    <p>Boutique wealth and legacy management for high-net-worth individuals, sports professionals and corporate leaders. Building golden legacies that last generations.</p>
+                </div>
+                
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About</a></li>
+                        <li><a href="#services">Services</a></li>
+                        <li><a href="#insurance">Insurance</a></li>
+                        <li><a href="#packages">Packages</a></li>
+                        <li><a href="#clients">Clients</a></li>
+                        <li><a href="#team">Team</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-services">
+                    <h4>Core Services</h4>
+                    <ul>
+                        <li><a href="#services">Wealth Legacy Planning</a></li>
+                        <li><a href="#services">Strategic Risk Advisory</a></li>
+                        <li><a href="#services">Athlete & Talent Management</a></li>
+                        <li><a href="#services">Brand & PR Management</a></li>
+                    </ul>
+                </div>
+                
+                <div class="footer-insurance">
+                    <h4>Insurance Solutions</h4>
+                    <ul>
+                        <li><a href="#insurance">Personal Protection</a></li>
+                        <li><a href="#insurance">Commercial Protection</a></li>
+                        <li><a href="#insurance">Specialized Risk Solutions</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="copyright">
+                &copy; 2023 APEX LEGACY MANAGEMENT. All rights reserved. | Privacy Policy | Terms & Conditions
+            </div>
+        </div>
+    </footer>
+
+    <!-- ===== JAVASCRIPT ===== -->
+    <script>
+        // DOM Elements
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const header = document.getElementById('header');
+        const contactForm = document.getElementById('contact-form');
+        const navLinks = document.querySelectorAll('nav a, .mobile-menu a');
+        const heroCanvas = document.getElementById('hero-canvas');
+        const aboutCanvas = document.getElementById('about-canvas');
+        
+        // ===== MOBILE MENU TOGGLE =====
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.style.display = mobileMenu.style.display === 'block' ? 'none' : 'block';
+        });
+        
+        // Close mobile menu when clicking on a link
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.style.display = 'none';
+            });
+        });
+        
+        // ===== HEADER SCROLL EFFECT =====
+        window.addEventListener('scroll', () => {
+            header.classList.toggle('scrolled', window.scrollY > 50);
+        });
+        
+        // ===== SMOOTH SCROLLING =====
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                if(targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if(targetElement) {
+                    window.scrollTo({
+                        top: targetElement.offsetTop - 80,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+        
+        // ===== FORM SUBMISSION =====
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            
+            // Get form data
+            const formData = {
+                name: document.getElementById('name').value,
+                email: document.getElementById('email').value,
+                interest: document.getElementById('interest').value,
+                message: document.getElementById('message').value
+            };
+            
+            // Here you would typically send this data to a Java backend
+            // For demonstration, we'll simulate a Java backend call
+            simulateJavaBackendCall(formData);
+            
+            // Show success message
+            alert('Thank you for your message. We will contact you shortly to discuss your golden legacy planning needs.');
+            contactForm.reset();
+        });
+        
+        // ===== SIMULATE JAVA BACKEND CALL =====
+        function simulateJavaBackendCall(formData) {
+            console.log('Sending data to Java backend:', formData);
+            
+            // In a real application, this would be an AJAX call to your Java backend
+            // Example using fetch API:
+            /*
+            fetch('https://your-java-backend.com/api/contact', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data
